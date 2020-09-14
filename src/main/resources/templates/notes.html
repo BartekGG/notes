@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Notatki</title>
+    <style>table tr:nth-of-type(2n) { background-color: #f0f0f0 }</style>
+</head>
+<body>
+<h1>Dodaj notatkę</h1>
+<form action="" method="post">
+    <input type="text" name="title" placeholder="Tytuł notatki" /><br />
+    <textarea name="contents" placeholder="Treść notatki..." required></textarea><br />
+    <select name="priority" required>
+        <option value="" disabled selected>Wybierz priorytet...</option>
+        <option th:each="priority : ${listOfPriorities}" th:value="${priority.name()}" th:text="${priority}"></option>
+    </select><br />
+    <input type="submit" value="Zapisz notatkę" />
+    <input type="reset" value="Wyczyść formularz" />
+</form>
+<hr style="margin: 14px 0"/>
+<h1>Zapisane notatki</h1>
+<table style="width: 100%">
+    <thead>
+    <tr>
+        <th>Data</th>
+        <th>Tytuł</th>
+        <th>Treść</th>
+        <th>Priorytet</th>
+        <th>Akcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="note : ${notes}" style="border-bottom: 2px solid black;">
+        <td th:text="${note.date}"></td>
+        <td th:text="${note.title}"></td>
+        <td th:text="${note.contents}" style="white-space: pre;"></td>
+        <td th:text="${note.priority}"></td>
+        <td><a th:href="'/delete/' + ${note.id}">Usuń</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
